@@ -29,15 +29,19 @@ MAX_YEAR = 1900
 
 
 def validate_id(value):
-    """An ID is the letters 'MS' followed by exactly three digits.
+    def validate_id(value):
+    if (len(value) == 5 and 
+        value.startswith("MS") and 
+        value[2:].isdigit() and 
+        value[2:] != "000"):
+        return True, "Valid Input"
+    else:
+        return False, ("Invalid Input. Pls put valid input.  "
+                       "Valid: MS001, MS742 "
+                       "Invalid: MS1, MS0012, ms001, XX001, MS000, MS00A")
 
-    Valid:   "MS001", "MS742"
-    Invalid: "MS1", "MS0012", "ms001", "XX001", "", "MS00A"
 
-    Returns (bool, str).
-    """
-    h
-    raise NotImplementedError("validate_id")
+
 
 
 def validate_title(value):
