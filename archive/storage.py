@@ -13,7 +13,9 @@ separates fields; the newline separates records. Nothing else is doing
 any work.
 """
 
+import csv
 from archive.errors import MalformedRecordError
+from archive.validation import validate_record
 
 FIELD_NAMES = ["id", "title", "city", "year", "condition"]
 
