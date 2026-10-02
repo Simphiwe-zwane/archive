@@ -19,19 +19,16 @@ FIELD_NAMES = ["id", "title", "city", "year", "condition"]
 
 
 def parse_line(line):
-    """Turn one CSV line into a dict with the five FIELD_NAMES as keys.
+    WordList = line.split(',')
 
-    Whitespace around the line (including the trailing newline) is stripped.
-    Field values are stripped too.
+    return {
+        "Id" : WordList[0],
+        "Title" : WordList[1],
+        "City" : WordList[2],
+        "Year" : WordList[3],
+        "Condition" : WordList[4]
+    }
 
-    If the line does not split into exactly 5 fields, raise
-    MalformedRecordError. Do not guess, do not pad with blanks — a line with
-    four fields is not a record with an empty one, it is a broken line, and
-    the difference matters when you report it to whoever typed it.
-
-    Returns dict.
-    """
-    raise NotImplementedError("parse_line")
 
 
 def load_archive(path):
