@@ -29,7 +29,6 @@ MAX_YEAR = 1900
 
 
 def validate_id(value):
-    def validate_id(value):
     if (len(value) == 5 and 
         value.startswith("MS") and 
         value[2:].isdigit() and 
@@ -45,6 +44,7 @@ def validate_id(value):
 
 
 def validate_title(value):
+
     """A title must be present and at least 3 characters once stripped.
 
     Valid:   "Tarikh al-Sudan"
