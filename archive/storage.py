@@ -21,6 +21,7 @@ FIELD_NAMES = ["id", "title", "city", "year", "condition"]
 
 
 def parse_line(line):
+    
     WordList = line.split(',')
 
     return {
@@ -34,6 +35,11 @@ def parse_line(line):
 
 
 def load_archive(path):
+
+    with open(path, "r") as f:
+        data = csv.reader(f)
+        for row in data:
+            record = parse_line(row.replace("[", ""))
     """Read the file at `path` and return (valid_records, rejected_lines).
 
     valid_records   list of dicts that passed validate_record
