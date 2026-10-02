@@ -64,20 +64,19 @@ def validate_city(value):
 
 
 def validate_year(value):
-    """A year must be present, numeric, and between MIN_YEAR and MAX_YEAR
-    INCLUSIVE.
-
-    Valid:   "1655", "1100", "1900"
-    Invalid: "", "   ", "c.1590", "sixteen fifty", "1099", "1901", "2087"
-
-    Note that "2087" parses perfectly well as a number. It is still wrong.
-    That is the whole point of a range check.
-
-    Returns (bool, str).
-    """
-    raise NotImplementedError("validate_year")
-
-
+    If value.isdigit():
+        year = int(value)
+        if MIN_YEAR <= year <= MAX_YEAR:
+            return True, "Valid Input"
+        else:
+            return False, ("Invalid Input. Pls put valid input.  "
+                           "Valid: 1655, 1100, 1900 "
+                           "Invalid: '', '   ', 'c.1590', 'sixteen fifty', '1099', '1901', '2087'")
+    else:
+        return False, ("Invalid Input. Pls put valid input.  "
+                       "Valid: 1655, 1100, 1900 "
+                       "Invalid: '', '   ', 'c.1590', 'sixteen fifty', '1099', '1901', '2087'")
+   
 def validate_condition(value):
     """A condition must be one of VALID_CONDITIONS, case-insensitively.
 
