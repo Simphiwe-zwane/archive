@@ -30,8 +30,6 @@ def parse_line(line):
     }
 
 
-    raise NotImplementedError("parse_line")
-
 
 def load_archive(path):
     """Read the file at `path` and return (valid_records, rejected_lines).
