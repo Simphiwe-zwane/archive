@@ -64,7 +64,7 @@ def validate_city(value):
 
 
 def validate_year(value):
-    If value.isdigit():
+    if value.isdigit():
         year = int(value)
         if MIN_YEAR <= year <= MAX_YEAR:
             return True, "Valid Input"
@@ -78,25 +78,32 @@ def validate_year(value):
                        "Invalid: '', '   ', 'c.1590', 'sixteen fifty', '1099', '1901', '2087'")
    
 def validate_condition(value):
-    """A condition must be one of VALID_CONDITIONS, case-insensitively.
-
-    Valid:   "fragile", "GOOD", "Fair"
-    Invalid: "excellent", "", "ok"
-
-    Returns (bool, str).
-    """
-    raise NotImplementedError("validate_condition")
-
+    if value.strip().lower() in (condition.lower() for condition in VALID_CONDITIONS):
+        return True, "Valid Input"
+    else:
+        return False, ("Invalid Input. Pls put valid input.  "
+                       "Valid: fragile, fair, good "
+                       "Invalid: '', '   ', 'excellent', 'poor', 'bad'")
 
 def validate_record(record):
-    """Validate a whole record dictionary.
+    errors = []
+    
+    checks = [
+        ('id', validate_id),
+        ('title', validate_title),
+        ('city', validate_city),
+        ('year', validate_year),
+        ('condition', validate_condition)
+    ]
+    
+    for key, function in checks:
+        value = record.get(key)
+        error_message = function(value)
+        
+        if error_message:
+            errors.append(error_message)
+            
+    return errors
 
-    record is a dict with the keys: id, title, city, year, condition.
-
-    Returns a LIST of reasons the record is invalid — one string per broken
-    rule, in this field order: id, title, city, year, condition.
-    An empty list means the record is valid.
-
-    Do not re-write the rules here. Call the five functions above.
-    """
-    raise NotImplementedError("validate_record")
+    
+   
