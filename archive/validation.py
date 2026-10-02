@@ -44,27 +44,23 @@ def validate_id(value):
 
 
 def validate_title(value):
+    if len(value.strip()) >= 3:
+        return True, "Valid Input"
+    else:
+        return False, ("Invalid Input. Pls put valid input.  "
+                       "Valid: Tarikh al-Sudan "
+                       "Invalid: '', '   ', 'Ab'")
 
-    """A title must be present and at least 3 characters once stripped.
-
-    Valid:   "Tarikh al-Sudan"
-    Invalid: "", "   ", "Ab"
-
-    Returns (bool, str).
-    """
-    raise NotImplementedError("validate_title")
 
 
 def validate_city(value):
-    """A city must be present and appear in KNOWN_CITIES.
+    if value.strip().lower() in (city.lower() for city in KNOWN_CITIES):
+        return True, "Valid Input"
+    else:
+        return False, ("Invalid Input. Pls put valid input.  "
+                       "Valid: Timbuktu, Djenne, Gao, Walata, Chinguetti "
+                       "Invalid: Kano, '   ', 'New York'")
 
-    Comparison is case-insensitive: "timbuktu" is acceptable.
-    "Kano" is not in our list, so it is rejected — and that is a real
-    decision with a cost. Write about it in your README.
-
-    Returns (bool, str).
-    """
-    raise NotImplementedError("validate_city")
 
 
 def validate_year(value):
