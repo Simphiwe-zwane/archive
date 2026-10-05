@@ -35,8 +35,7 @@ def validate_id(value):
     Invalid: "MS1", "MS0012", "ms001", "XX001", "", "MS00A"
 
     Returns (bool, str).
-    """
-    h
+    """ 
     raise NotImplementedError("validate_id")
 
 
@@ -63,7 +62,7 @@ def validate_city(value):
     raise NotImplementedError("validate_city")
 
 
-def validate_year(value):
+def validate_Year(value):
     """A year must be present, numeric, and between MIN_YEAR and MAX_YEAR
     INCLUSIVE.
 
