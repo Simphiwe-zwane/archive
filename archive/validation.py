@@ -63,7 +63,7 @@ def validate_city(value):
 
 
 
-def validate_year(value):
+def validate_y(value):
     if value.isdigit():
         year = int(value)
         if MIN_YEAR <= year <= MAX_YEAR:
