@@ -29,75 +29,81 @@ MAX_YEAR = 1900
 
 
 def validate_id(value):
-    """An ID is the letters 'MS' followed by exactly three digits.
+    if (len(value) == 5 and 
+        value.startswith("MS") and 
+        value[2:].isdigit() and 
+        value[2:] != "000"):
+        return True, "Valid Input"
+    else:
+        return False, ("Invalid Input. Pls put valid input.  "
+                       "Valid: MS001, MS742 "
+                       "Invalid: MS1, MS0012, ms001, XX001, MS000, MS00A")
 
-    Valid:   "MS001", "MS742"
-    Invalid: "MS1", "MS0012", "ms001", "XX001", "", "MS00A"
 
-    Returns (bool, str).
-    """
-    h
-    raise NotImplementedError("validate_id")
+
 
 
 def validate_title(value):
-    """A title must be present and at least 3 characters once stripped.
+    if len(value.strip()) >= 3:
+        return True, "Valid Input"
+    else:
+        return False, ("Invalid Input. Pls put valid input.  "
+                       "Valid: Tarikh al-Sudan "
+                       "Invalid: '', '   ', 'Ab'")
 
-    Valid:   "Tarikh al-Sudan"
-    Invalid: "", "   ", "Ab"
-
-    Returns (bool, str).
-    """
-    raise NotImplementedError("validate_title")
 
 
 def validate_city(value):
-    """A city must be present and appear in KNOWN_CITIES.
-
-    Comparison is case-insensitive: "timbuktu" is acceptable.
-    "Kano" is not in our list, so it is rejected — and that is a real
-    decision with a cost. Write about it in your README.
-
-    Returns (bool, str).
-    """
-    raise NotImplementedError("validate_city")
+    if value.strip().lower() in (city.lower() for city in KNOWN_CITIES):
+        return True, "Valid Input"
+    else:
+        return False, ("Invalid Input. Pls put valid input.  "
+                       "Valid: Timbuktu, Djenne, Gao, Walata, Chinguetti "
+                       "Invalid: Kano, '   ', 'New York'")
 
 
-def validate_year(value):
-    """A year must be present, numeric, and between MIN_YEAR and MAX_YEAR
-    INCLUSIVE.
 
-    Valid:   "1655", "1100", "1900"
-    Invalid: "", "   ", "c.1590", "sixteen fifty", "1099", "1901", "2087"
-
-    Note that "2087" parses perfectly well as a number. It is still wrong.
-    That is the whole point of a range check.
-
-    Returns (bool, str).
-    """
-    raise NotImplementedError("validate_year")
-
-
+def validate_y(value):
+    if value.isdigit():
+        year = int(value)
+        if MIN_YEAR <= year <= MAX_YEAR:
+            return True, "Valid Input"
+        else:
+            return False, ("Invalid Input. Pls put valid input.  "
+                           "Valid: 1655, 1100, 1900 "
+                           "Invalid: '', '   ', 'c.1590', 'sixteen fifty', '1099', '1901', '2087'")
+    else:
+        return False, ("Invalid Input. Pls put valid input.  "
+                       "Valid: 1655, 1100, 1900 "
+                       "Invalid: '', '   ', 'c.1590', 'sixteen fifty', '1099', '1901', '2087'")
+   
 def validate_condition(value):
-    """A condition must be one of VALID_CONDITIONS, case-insensitively.
-
-    Valid:   "fragile", "GOOD", "Fair"
-    Invalid: "excellent", "", "ok"
-
-    Returns (bool, str).
-    """
-    raise NotImplementedError("validate_condition")
-
+    if value.strip().lower() in (condition.lower() for condition in VALID_CONDITIONS):
+        return True, "Valid Input"
+    else:
+        return False, ("Invalid Input. Pls put valid input.  "
+                       "Valid: fragile, fair, good "
+                       "Invalid: '', '   ', 'excellent', 'poor', 'bad'")
 
 def validate_record(record):
-    """Validate a whole record dictionary.
+    errors = []
+    
+    checks = [
+        ('id', validate_id),
+        ('title', validate_title),
+        ('city', validate_city),
+        ('year', validate_year),
+        ('condition', validate_condition)
+    ]
+    
+    for key, function in checks:
+        value = record.get(key)
+        error_message = function(value)
+        
+        if error_message:
+            errors.append(error_message)
+            
+    return errors
 
-    record is a dict with the keys: id, title, city, year, condition.
-
-    Returns a LIST of reasons the record is invalid — one string per broken
-    rule, in this field order: id, title, city, year, condition.
-    An empty list means the record is valid.
-
-    Do not re-write the rules here. Call the five functions above.
-    """
-    raise NotImplementedError("validate_record")
+    
+   
