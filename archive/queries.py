@@ -13,47 +13,43 @@ Note in your README which one would be instant with a dictionary instead.
 
 
 def count_before(records, year):
-    """How many manuscripts were written strictly BEFORE `year`?
+    count = 0
+    for record in records:
+        if int(record["year"]) < year:
+            count += 1
+    return count
 
-    `year` is an int. Record years may be strings from the file — convert.
-
-    Returns int.
-    """
-    raise NotImplementedError("count_before")
 
 
 def find_by_city(records, city):
-    """Every record whose city matches `city`, case-insensitively.
+    matches = []
+    target_city = city.lower()
+    for record in records:
+        if record["city"].lower() == target_city:
+            matches.append(record)
+    return matches
 
-    Order is preserved: the records come back in the order they appear in
-    `records`.
-
-    Returns list of dicts (empty list if none match).
-    """
-    raise NotImplementedError("find_by_city")
 
 
 def oldest(records):
-    """The record with the smallest year.
+    if not records:
+        return None
 
-    An empty list returns None — not an error, not a crash. Deciding what
-    "the oldest of nothing" means is your job, and the answer is None.
-
-    If two records tie on year, return the one that appears FIRST.
-
-    Returns dict or None.
-    """
-    raise NotImplementedError("oldest")
+    oldest_record = records[0]
+    
+    for record in records:
+        if int(record["year"]) < int(oldest_record["year"]):
+            oldest_record = record
+            
+    return oldest_record
 
 
 def cities_summary(records):
-    """How many manuscripts come from each city?
-
-    Returns a dict mapping city name to count. A city with zero manuscripts
-    does not appear as a key at all — do not pre-fill from KNOWN_CITIES.
-
-    Use the city spelling exactly as it appears in the records.
-
-    Returns dict.
-    """
-    raise NotImplementedError("cities_summary")
+    summary = {}
+    for record in records:
+        city = record["city"]
+        if city in summary:
+            summary[city] += 1
+        else:
+            summary[city] = 1
+    return summary
