@@ -1,6 +1,6 @@
 # The Archive
 
-**Pair:** *(your two names)* **Repository:** *(link)*
+**Pair:** *Simphiwe and Abas* **Repository:** *(https://github.com/Simphiwe-zwane/archive.git)*
 
 > This file is Part E of the assignment — **15 marks**. Replace every placeholder below. Delete the instruction lines in italics as you go. Marks come from the reasoning, not the length.
 
@@ -12,11 +12,11 @@
 
 | Field | Type | Example | If it is unknown, we… |
 | --- | --- | --- | --- |
-| id |  | `MS001` |  |
-| title |  |  |  |
-| city |  |  |  |
-| year |  |  |  |
-| condition |  |  |  |
+| id | string | `MS001` | reject and return error message |
+| title | string | `The world of Astronomy` | save as unnamedX |
+| city | string | `Gao` | save as `unknown city` |
+| year | int | 1978 | save as `nd` |
+| condition | enumerated type | `Fair` | save as `unknown` |
 
 ---
 
@@ -24,11 +24,12 @@
 
 | Field | Rule(s) | Rejects (example) |
 | --- | --- | --- |
-| id |  |  |
-| title |  |  |
-| city |  |  |
-| year |  |  |
-| condition |  |  |
+| id | should be in the form MSABC where ABC is any 3 digits number except 000, should be present  | 'SD001' |
+| title | should not be entirely made of white space characters, should be present | ' ' |
+| city | should not be entirely made of white space characters, should be present, should not have restricted characters such as digits | 'G1ee' |
+| year | should only have digits, should be present, should be in the range 0 - current year | '98880' |
+| condition | should be one of the specified condition, should be present | 'Horrible' |
+
 
 ### Who decided the year range?
 
