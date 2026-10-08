@@ -35,34 +35,31 @@ def parse_line(line):
 
 
 def load_archive(path):
-
+    validRecords = []
+    invalidRecords = []
     with open(path, "r") as f:
         data = csv.reader(f)
         for row in data:
+            record = parse_line(row.replace("(", ""))
+            record = parse_line(row.replace(")", ""))
             record = parse_line(row.replace("[", ""))
-    """Read the file at `path` and return (valid_records, rejected_lines).
+            record = parse_line(row.replace("]", ""))
+            
+            if validate_record(row) == ():
+                validRecords.append()
+            else :
+                invalidRecords.append(row)
+    return (validRecords, invalidRecords)
 
-    valid_records   list of dicts that passed validate_record
-    rejected_lines  list of the ORIGINAL line strings that did not — either
-                    because they were malformed, or because validation
-                    rejected them
-
-    A file that does not exist is not an error. It means the archive is new.
-    Return ([], []) and DO NOT raise. Your program must start on a machine
-    where nobody has saved anything yet.
-
-    Blank lines are skipped silently.
-
-    Returns (list, list).
-    """
-    raise NotImplementedError("load_archive")
 
 
 def save_archive(path, records):
-    """Write every record to `path` as CSV, one per line, no header.
+    
+    with open(path, "a") as f:
+        writer = csv.writer(f)
 
-    Field order is FIELD_NAMES. The file is overwritten, not appended to.
+    for record in records:
+        writer.writerow(record.values())
 
-    Returns None.
-    """
-    raise NotImplementedError("save_archive")
+
+    
